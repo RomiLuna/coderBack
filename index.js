@@ -14,8 +14,21 @@ const productos = []
 const routerproductos = express.Router()
 routerproductos.use(express.urlencoded({ extended: true }))
 routerproductos.use(express.json())
+
 routerproductos.get('/', (req, res) => {
   res.json(productos)
+})
+
+routerproductos.get('/:id', (req, res) => {
+  const producto = productos[req.params.id]
+  if (isNaN(req.params.id)) {
+    res.json({ error: 'el parametro no es un numero' })
+  } else {
+    producto !== undefined
+      ? res.json(producto)
+      : res.json({ error: 'parametro esta fuera de rango' })
+  }
+  res.json(producto)
 })
 
 routerproductos.post('/', (req, res) => {
